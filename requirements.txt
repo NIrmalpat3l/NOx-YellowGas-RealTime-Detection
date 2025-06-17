@@ -4,5 +4,6 @@ numpy
 matplotlib
 flask
 werkzeug
+certifi
 pymongo
 python-dotenv

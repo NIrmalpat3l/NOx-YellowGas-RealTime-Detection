@@ -3,6 +3,7 @@
 import os
 import datetime
 import ssl
+import certifi
 from pymongo import MongoClient
 from pymongo.errors import ConnectionFailure, ConfigurationError
 from dotenv import load_dotenv
@@ -15,11 +16,15 @@ EVENTS    = "yellow_gas_events"
 
 # ─── Persistent client ───────────────────────────────────────────────
 try:
+    # client = MongoClient(
+    #     MONGO_URI,
+    #     serverSelectionTimeoutMS=5000,
+    #     tls=True,
+    #     tlsAllowInvalidCertificates=True
+    # )
     client = MongoClient(
-        MONGO_URI,
-        serverSelectionTimeoutMS=5000,
-        tls=True,
-        tlsAllowInvalidCertificates=True
+        os.getenv("MONGO_URI"),
+        tlsCAFile=certifi.where()
     )
     client.admin.command("ping")
 except (ConnectionFailure, ConfigurationError) as e:
