@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>NOx • Live Stream</title>
+    <style>
+        body {
+            margin: 0;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <img id="stream" alt="Loading…">
+    <script>
+        const p = new URLSearchParams(location.search), s = p.get('session');
+        if (!s) { document.body.innerHTML = 'Missing session'; throw 0; }
+        document.getElementById('stream').src = `/video_feed/${s}`;
+    </script>
+</body>
+
+</html>

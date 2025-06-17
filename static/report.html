@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>NOx • Monthly Report</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 2rem;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%
+        }
+
+        th,
+        td {
+            border: 1px solid #ccc;
+            padding: 0.5rem;
+            text-align: center
+        }
+
+        th {
+            background: #eee
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Last 30 Days Emission</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Chimney</th>
+                <th>Day</th>
+                <th>Seconds</th>
+            </tr>
+        </thead>
+        <tbody id="reportBody">
+            <tr>
+                <td colspan="3">Loading…</td>
+            </tr>
+        </tbody>
+    </table>
+    <script>
+        fetch('/api/summary?last_days=30').then(r => r.json()).then(data => {
+            const tb = document.getElementById('reportBody');
+            if (!data.length) return tb.innerHTML = '<tr><td colspan="3">No data</td></tr>';
+            tb.innerHTML = data.map(d => `
+      <tr>
+        <td>${d.chimney_number}</td>
+        <td>${d.day}</td>
+        <td>${d.total_duration.toFixed(1)}</td>
+      </tr>`).join('');
+        }).catch(e => {
+            document.getElementById('reportBody').innerHTML = '<tr><td colspan="3">Error</td></tr>';
+        });
+    </script>
+</body>
+
+</html>

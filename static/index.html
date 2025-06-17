@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>NOx Detection • Upload</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            max-width: 600px;
+            margin: 2rem auto;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>NOx Detection</h1>
+    <p>Upload an MP4 to start real-time annotation.</p>
+    <form id="uploadForm">
+        <input type="file" id="videoFile" accept="video/mp4" required>
+        <button>Upload & Start</button>
+    </form>
+    <div id="links" style="display:none; margin-top:1rem;">
+        ▶️ <a id="streamLink" href="#">Live Stream</a><br>
+        📊 <a href="report.html">Monthly Report</a>
+    </div>
+    <script>
+        document.getElementById('uploadForm').onsubmit = async e => {
+            e.preventDefault();
+            const f = document.getElementById('videoFile').files[0];
+            if (!f) return alert('Select a file');
+            const fd = new FormData(); fd.append('video', f);
+            const r = await fetch('/api/upload', { method: 'POST', body: fd });
+            const j = await r.json();
+            if (!r.ok) return alert(j.error || 'Upload failed');
+            document.getElementById('links').style.display = 'block';
+            document.getElementById('streamLink').href = `stream.html?session=${j.session_id}`;
+        };
+    </script>
+</body>
+
+</html>
