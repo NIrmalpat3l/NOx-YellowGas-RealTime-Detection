@@ -11,7 +11,7 @@ ChimneyVision is a real-time video processing application designed to detect yel
 1. Clone the repository:   
 
 ```
-git clone https://github.   com/yourusername/   ChimneyVision.git
+git clone https://github.com/NIrmalpat3l/NOx-YellowGas-RealTime-Detection
 ```
 
 
