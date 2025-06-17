@@ -1,0 +1,8 @@
+opencv-python
+ultralytics
+numpy
+matplotlib
+flask
+werkzeug
+pymongo
+python-dotenv
